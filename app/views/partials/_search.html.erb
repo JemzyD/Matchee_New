@@ -1,0 +1,8 @@
+<div class="input-group input-group-lg col-md-8 col-md-offset-2">
+    <%= form_tag profile_index_path, method: 'GET' do %>
+      <%= text_field_tag :search, params[:search] , class:'col-md-8'%>
+      <%= button_tag  name: nil , class:'btn btn-secondary col-md-3' do %>
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+      <% end %>
+    <% end %>
+  </div>

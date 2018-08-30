@@ -1,0 +1,32 @@
+<div class='container'>
+  <%= render 'partials/search' %>
+  <h1>My Bookings</h1>
+
+  <% if @bookings_fl != nil %>
+
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Description of booking</th>
+        <th>Booking's start date</th>
+        <th>Booking's end date</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <% @bookings_fl.each do |booking| %>
+    <tr>
+      <td><%=booking.booker.description%></td>
+      <td><%=booking.booker.start_date.strftime("%e %b %Y %l:%M %p")%></td>
+      <td><%=booking.booker.end_date.strftime("%e %b %Y %l:%M %p")%></td>
+      <td><%= link_to 'view this booking', enquiry_path(booking.booker.id), {:class => 'btn btn-default'}%></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <% else %>
+    <div>
+      <h1>You do not have booking yet.</h1>
+    </div>
+
+  <% end %>
+</div>

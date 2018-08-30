@@ -1,0 +1,10 @@
+<div clas='conatiner'>
+  <div class='col-md-6 col-md-offset-3'>
+    <h1>Reset Password</h1>
+
+    <%= bootstrap_form_for @user, url:password_reset_path(@user.reset_token), html: { method: :patch } do |f| %>
+      <%= f.password_field :password, placeholder: 'Password (min 8 characters)' %>
+      <%= f.submit 'Submit' %>
+    <% end %>
+  </div>
+</div>

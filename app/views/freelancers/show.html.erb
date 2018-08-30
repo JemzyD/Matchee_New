@@ -1,0 +1,7 @@
+
+  
+<% if current_user && @freelancer.user == current_user%>
+  <%= render 'freelancers/partials/show_dashboard' %>
+<% else %>
+  <%= render 'freelancers/partials/show_profile' %>
+<% end %>

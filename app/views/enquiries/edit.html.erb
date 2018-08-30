@@ -1,0 +1,193 @@
+<div class='container'>
+  <% if current_freelancer != nil %>
+    <% if current_freelancer.id == @enquiry.freelancer.id %>
+    <div class='row'>
+    <div class='col-md-1'>
+      <span>
+        <%= cl_image_tag(@enquiry.user.profile_picture,
+          :width => 80, :height => 80,
+          :crop => :fill, :gravity => :face)
+          %>
+      </span>
+    </div>
+
+    <div class='col-md-offset-1'>
+        <%= link_to @enquiry.user.name.capitalize, edit_enquiry_path(@enquiry.id),  class:'h2' %>
+        <br>
+        Requestor
+    </div>
+  </div>
+  <% end %>
+
+
+  <% else %>
+
+  <div class='row'>
+    <div class='col-md-1'>
+      <span>
+        <%= cl_image_tag(@enquiry.freelancer.picture,
+            :width => 80, :height => 80,
+            :crop => :fill, :gravity => :face)
+            %>
+      </span>
+    </div>
+
+    <div class='col-md-offset-1'>
+        <%= link_to @enquiry.freelancer.user.name.capitalize, profile_path(@enquiry.freelancer.id) , class:'h2'%>
+        <br>
+        Freelancer
+    </div>
+  </div>
+  <% end %>
+
+
+  <br>
+  <br>
+  <br>
+
+
+
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class='col-md-5 enquiry_form panel panel-default'>
+        <% if @enquiry.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(enquiry.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
+            <ul>
+              <% @enquiry.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+
+
+
+
+
+        <% if current_freelancer != nil %>
+          <% if current_freelancer.id == @enquiry.freelancer.id %>
+            <div class='row'>
+              <div class='col-md-12'>
+                <%= bootstrap_form_for(@enquiry, url: bookings_create_path, html: {method: "POST"})do |f| %>
+                  <div class="field">
+
+                    <%= f.text_field :description, class:"enquiry-"+ @enquiry.id.to_s + "-description", disabled: true %>
+                    <%= f.hidden_field :description, class:"enquiry-"+ @enquiry.id.to_s + "-description" %>
+                  </div>
+                  <br>
+                  <div class="field">
+
+                    <%= f.datetime_field :start_date, class:"enquiry-"+@enquiry.id.to_s + "-start_date", disabled: true  %>
+                    <%= f.hidden_field :start_date, class:"enquiry-"+@enquiry.id.to_s + "-start_date"  %>
+                  </div>
+                  <br>
+                  <div class="field">
+
+                    <%= f.datetime_field :end_date, class:"enquiry-"+@enquiry.id.to_s+ "-end_date", disabled: true  %>
+                    <%= f.hidden_field :end_date, class:"enquiry-"+@enquiry.id.to_s+ "-end_date" %>
+                  </div>
+                  <br>
+                  <div class="field">
+
+                    <%= f.number_field :price, class:"enquiry-"+ @enquiry.id.to_s + "-price", disabled: true  %>
+                    <%= f.hidden_field :price, class:"enquiry-"+ @enquiry.id.to_s + "-price" %>
+                  </div>
+                  <br>
+                  <div class="field">
+                    <%= f.hidden_field :id, {:class => 'form-control'} %>
+                  </div>
+                  <% if @enquiry.status != 'accepted' %>
+
+                  <div class="actions">
+                    <%= f.submit "Finalise  & Accept" ,class:'form-control btn btn-primary'%>
+                  </div>
+                  <% else %>
+                  <%= f.submit "Deal Finalised" , class:'form-control btn btn-primary', disabled: true %>
+                  <% end  %>
+
+
+
+                </div>
+                <%= render partial: 'partials/calendar_for_specific_booking', locals: { passed_datum: @occurrences } %>
+            </div>
+        <% end %>
+<% end %>
+  <% else %>
+  <div class='row'>
+    <div class='col-md-12'>
+    <%= bootstrap_form_for(@enquiry, :html=>{:remote => true})do |f| %>
+
+    <div class="field">
+
+      <%= f.text_field :description, class:"enquiry-"+ @enquiry.id.to_s + "-description" %>
+    </div>
+    <br>
+    <br>
+    <div class="field">
+
+      <%= f.datetime_field :start_date, class:"enquiry-"+@enquiry.id.to_s + "-start_date" %>
+    </div>
+    <br>
+    <br>
+    <div class="field">
+
+      <%= f.datetime_field :end_date, class:"enquiry-"+@enquiry.id.to_s+ "-end_date" %>
+    </div>
+    <br>
+    <br>
+    <div class="field">
+
+      <%= f.number_field :price, class:"enquiry-"+ @enquiry.id.to_s + "-price" %>
+    </div>
+
+    <% if @enquiry.status != 'accepted' %>
+
+    <div class="actions">
+      <%= f.submit "Update" , class:'form-control btn btn-primary' %>
+    </div>
+    <% else %>
+    <%= f.submit "Deal Finalised" , class:'form-control btn btn-primary', disabled: true %>
+    <% end  %>
+  </div>
+  <%= render partial: 'partials/calendar_for_specific_booking', locals: { passed_datum: @occurrences } %>
+</div>
+    <% end %>
+  <% end %>
+</div>
+
+
+<div class='col-md-7'>
+  <div id='messages' class='panel panel-default'>
+    <%= render 'messages/message'%>
+  </div>
+
+  <form class="new_message" data-behavior="enquiry_speaker">
+    <input name="read" type="hidden" value= false >
+    <input name="enquiry_id" type="hidden" value="<%= @enquiry.id %>">
+    <input name="sender_id" type="hidden" value="<%= current_user.id %>">
+    <textarea name="content" class="form-control" ></textarea>
+    <!-- <input type="submit" class="btn btn-success" value="Send"> -->
+  </form>
+</div>
+</div>
+</div>
+</div>
+
+
+<script>
+var scrolled = false;
+function updateScroll(){
+    if(!scrolled){
+        var element = document.getElementById("messages");
+        element.scrollTop = element.scrollHeight;
+    }
+}
+
+$("#messages").on('scroll', function(){
+    scrolled=true;
+});
+
+updateScroll()
+</script>

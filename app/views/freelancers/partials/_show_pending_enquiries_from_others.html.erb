@@ -1,0 +1,21 @@
+<h3>Pending enquires</h3>
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Description of Enquiry</th>
+      <th>Enquiry's start date</th>
+      <th>Enquiry's end date</th>
+      <th>Liason</th>
+    </tr>
+  </thead>
+  <% @enquiries.each do |enquiry| %>
+    <% if enquiry.freelancer_id == current_freelancer.id %>
+      <tr>
+        <td><%=enquiry.description%></td>
+        <td><%=enquiry.start_date.strftime("%e %b %Y %l:%M %p")%></td>
+        <td><%=enquiry.end_date.strftime("%e %b %Y %l:%M %p")%></td>
+        <td><%= link_to 'continue liason with customer', edit_enquiry_path(enquiry.id), {:class => 'btn btn-default'} %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

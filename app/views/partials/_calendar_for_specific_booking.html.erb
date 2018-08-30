@@ -1,0 +1,8 @@
+<%= week_calendar( start_date: passed_datum[:start_date] , partial: 'simple_calendar/week_calendar', events: passed_datum[:dates] ) do |date, occurrences| %>
+  <%= date.day %>
+  <% occurrences.each do |occurrence| %>
+  <div>
+    Available from <%= passed_datum[:start_time] %> to <%= passed_datum[:end_time] %>
+  </div>
+  <% end %>
+<% end %>

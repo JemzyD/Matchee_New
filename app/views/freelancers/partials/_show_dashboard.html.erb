@@ -1,0 +1,65 @@
+
+<div class='container'>
+<div class='row'>
+<%= render 'partials/search' %>
+<div class='placeholder_box'>
+  <div class='left'>
+    <div class='picture_freelancer'>
+        <%if !@freelancer.picture%>
+        <%= cl_image_tag('https://www.soundstream.tv/assets/default_profile-e08597880fc222202f22984a4f1966a29b108e856a3fb935072bfbbc302a4b73.png')%>
+        <% else %>
+        <%= cl_image_tag(@freelancer.picture,
+            :width => 400, :height => 400, :default_image => "avatar.png")
+            %>
+            <% end %>
+      </div>
+
+    <div class='current_reviews_limit_3'>
+      <h3>Current Overall Rating</h3>
+      <%= render partial: 'partials/form_for_ratings', locals: {big_rating: @compiled_rating} %>
+      <br>
+      <h3>Latest reviews from other users</h3>
+      <% if @first_3_reviews %>
+        <% @first_3_reviews.each do |review| %>
+          <p><%= review.user.name%> said: <%= review.description_of_job %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class='right'>
+    <div class='pending_enquires, well'>
+      <%= render 'freelancers/partials/show_pending_enquiries_from_others' %>
+    </div>
+
+    <div class ='own_calendar, well'>
+      <h2>Your Schedule for the month</h2>
+
+      <h5>
+        You work <%= @freelancer.schedule.to_s.downcase %> from
+        <%= @occurrences[:start_time] %> to
+        <%= @occurrences[:end_time] %>
+      </h5>
+
+      <h3>Edit your profile to change your schedule</h3>
+      <%= month_calendar(partial: 'simple_calendar/month_calendar', events: @occurrences[:dates] ) do |date, occurrences| %>
+        <%= date.day %>
+        <% @freelancer.bookings.each do |booking| %>
+          <% if date == booking.time_start.to_date %>
+            <!-- slightly wrong pls edit in GA ZL slot is not pointing to correct enquiry path (should be finsihed enquiry no edits) -->
+          <%= link_to enquiry_path(booking.booker.id) do %>
+            <p class='slot'>Slot booked from <%= booking.time_start.strftime("%I:%M%p") %> to <%= booking.time_end.strftime("%I:%M%p") %>  </p>
+          <% end %>
+
+          <% end %>
+        <% end %>
+        <% occurrences.each do |occurrence| %>
+        <p class='free'>
+          Available from <%= @occurrences[:start_time] %> to <%= @occurrences[:end_time] %>
+        </p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>

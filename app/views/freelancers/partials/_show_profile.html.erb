@@ -1,0 +1,68 @@
+  <div class="container">
+    <div class='row'>
+      <%= render 'partials/search' %>
+    <div class="col-md-6">
+      <div class='col-md-12 text-center'>
+        <%if !@freelancer.picture%>
+        <%= cl_image_tag('https://www.soundstream.tv/assets/default_profile-e08597880fc222202f22984a4f1966a29b108e856a3fb935072bfbbc302a4b73.png')%>
+        <% else %>
+        <%= cl_image_tag(@freelancer.picture,
+            :width => 400, :height => 400, :default_image => "avatar.png")
+            %>
+            <% end %>
+      </div>
+      <br>
+      <div class='col-md-12'>
+        <h3><%= @freelancer.profession %></h3>
+        <div class='col-md-4'>
+          <h2><%= @freelancer.user.name.capitalize %></h2>
+          <span>Overall</span>
+            <%= render partial: 'partials/form_for_ratings', locals: {big_rating: @compiled_rating} %><br><br>
+      <span>Professionalism</span>
+      <%= render partial: 'partials/form_for_ratings', locals: {big_rating: @rating_professionalism} %><br><br>
+      <span>Cleanliness</span>
+      <%= render partial: 'partials/form_for_ratings', locals: {big_rating: @rating_cleanliness} %><br><br>
+      <span>Value for money</span>
+      <%= render partial: 'partials/form_for_ratings', locals: {big_rating: @rating_value} %><br><br>
+
+        <% if current_user %>
+          <% if Enquiry.where(user_id: current_user[:id], freelancer_id: @freelancer.id).size > 0 %>
+            <%= link_to 'Click here to rate me!', rating_path %>
+          <% end %>
+        <% end %>
+            </div>
+        <div class='col-md-8'>
+          <div class='col-md-12 '>
+            <p class='description'> <%= @freelancer.description %></p>
+            <p> $$ <%= @freelancer.price_start %> to <%= @freelancer.price_end %></p>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+
+  <div class='col-md-6 side-line'>
+    <div class='col-md-12'>
+    <div class="calendar-small">
+      <%= month_calendar(partial: 'simple_calendar/month_calendar', events: @occurrences[:dates]) do |date, occurrences| %>
+      <%= date.day %>
+      <% occurrences.each do |occurrence| %>
+      <div>
+        Available from <%= @occurrences[:start_time] %> to <%= @occurrences[:end_time] %>
+      </div>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+
+  <div class='new_enquiry col-md-12'>
+      <% if current_user %>
+        <%= render 'enquiries/new' %><br>
+      <% else %>
+        <div class="btn btn-default text-white"><%= link_to "Login/Signup to make an enquiry", login_path %></div>
+      <% end %>
+  </div>
+
+</div>
+  </div>

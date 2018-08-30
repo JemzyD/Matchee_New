@@ -1,0 +1,42 @@
+<div class='container'>
+  <div class='row'>
+    <header class="intro-header">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="site-heading">
+            <h1>Matchee. The best hands</h1>
+            <h1>for your job.</h1>
+          </div>
+          <%= render 'partials/search' %>
+        </div>
+
+    </header>
+
+
+      <!-- Projects Row -->
+      <div class="row">
+        <% @freelancers.each do |freelancer| %>
+          <div class="col-md-4 portfolio-item">
+            <%=link_to profile_path(freelancer.id) do %>
+            <div>
+              <%if !freelancer.picture%>
+              <%= cl_image_tag('https://www.soundstream.tv/assets/default_profile-e08597880fc222202f22984a4f1966a29b108e856a3fb935072bfbbc302a4b73.png')%>
+              <% else %>
+              <%= cl_image_tag(freelancer.picture,
+                  :width => 300, :height => 300)
+                  %>
+              <% end %>
+
+              <h3><%= freelancer.user.name.capitalize %></h3>
+              <p><%=freelancer.profession%></p>
+              <span><%= render partial: 'partials/form_for_ratings', locals: {big_rating: compiled_rating(freelancer), disabled: true, cool_var: 'hey'} %></span>
+            </div>
+            <% end %>
+          </div>
+        <% end %>
+        </div>
+      </div>
+    <!-- /.row -->
+  </div>
+</div>
+
+<%= render 'freelancers/partials/map' %>

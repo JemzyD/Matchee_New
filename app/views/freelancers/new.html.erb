@@ -1,0 +1,55 @@
+<div class="container container-profile">
+
+<h1>Add Profile</h1><br>
+<%= form_for :freelancer, url: profile_index_path do |f| %>
+<p>
+  <%= f.label :profession %><br>
+  <%= f.text_field(:profession, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :description %><br>
+  <%= f.text_field(:description, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :picture %><br>
+  <%= f.file_field(:picture, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :start_working_hours %><br>
+  <%= f.time_field(:start_working_hours, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :end_working_hours %><br>
+  <%= f.time_field(:end_working_hours, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :price_start %><br>
+  <%= f.number_field(:price_start, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :price_end %><br>
+  <%= f.number_field(:price_end, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :address %><br>
+  <%= f.text_field(:address, {:class => 'form-control'}) %>
+</p>
+
+<p>Choose your schedule</p>
+<% Date::DAYNAMES.each do |day| %>
+  <%= check_box_tag('days[]', day) %>
+  <%= f.label day %>
+<% end %>
+
+<p>
+  <%= f.submit({:class => 'btn btn-primary'}) %>
+</p>
+<% end %>
+</div>

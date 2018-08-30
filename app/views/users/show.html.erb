@@ -1,0 +1,63 @@
+
+<div class='container'>
+  <div class='row'>
+<div class="image col-md-4">
+  <%if !@user.profile_picture%>
+  <%= cl_image_tag('https://www.soundstream.tv/assets/default_profile-e08597880fc222202f22984a4f1966a29b108e856a3fb935072bfbbc302a4b73.png')%>
+  <% else %>
+  <%= cl_image_tag(@user.profile_picture,
+      :width => 300, :height => 300,
+      :crop => :fill, :gravity => :face, :radius => 'max', :default_image => "avatar.png")
+      %>
+      <% end %>
+</div>
+
+  <div class='col-md-7'>
+    <div class="cont">
+      <h2>Upcoming Bookings</h2>
+      <div><table class="table">
+        <tr>
+          <th>Description</th>
+          <th>Start Date and Time</th>
+          <th>End date and time</th>
+        </tr>
+        <% @user.enquiries.where(:user_id == current_user.id).each do |enquiry| %>
+        <% if enquiry.bookings[0] %>
+        <tr>
+          <td><%= enquiry.description %></td>
+          <td><%= enquiry.start_date.strftime("%d/%m/%y - %H:%M") %></td>
+          <td><%= enquiry.end_date.strftime("%d/%m/%y - %H:%M") %></td>
+        </tr>
+        <% end %>
+        <% end %>
+      </table></div>
+      <h2>Pending Enquiries</h2>
+      <table class="table">
+        <tr>
+          <th>Description</th>
+          <th>Start Date and Time</th>
+          <th>End date and time</th>
+          <th>Liason</th>
+          <th>Status</th>
+        </tr>
+        <% if @user.enquiries.where('user_id =? AND status =?', current_user.id, 'open').size > 0 %>
+        <%  @user.enquiries.where('user_id =? AND status =?', current_user.id, 'open').each do |enquiry| %>
+        <tr>
+          <td><%= link_to enquiry.description, enquiry_path(enquiry.id) %></td>
+          <td><%= enquiry.start_date.strftime("%d/%m/%y - %H:%M") %></td>
+          <td><%= enquiry.end_date.strftime("%d/%m/%y - %H:%M") %></td>
+          <td><%= link_to "Chat with #{enquiry.freelancer.user.name.capitalize}", edit_enquiry_path(enquiry.id) %></td>
+          <% if enquiry.messages.where('read =? AND sender_id !=?', false , current_user.id).size > 0  %>
+          <td>Unread</td>
+          <% end %>
+        </tr>
+        <% end %>
+        <% else %>
+          No open enquiry
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>

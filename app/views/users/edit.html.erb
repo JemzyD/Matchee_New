@@ -1,0 +1,15 @@
+<div class="container">
+
+
+<h1>Set up your profile</h1>
+
+<%= bootstrap_form_for @user, url:user_path(@user), html: { method: :patch } do |f| %>
+  <%= f.text_field :name, placeholder: 'Name' %>
+  <%= f.email_field :email, placeholder: 'Email' %>
+  <%= f.password_field :password, placeholder: 'Password (min 8 characters)' %>
+  <%= f.text_field :phone, placeholder: 'Phone Number' %>
+  <%= f.text_field :address, placeholder: 'Address' %>
+  <%= f.file_field :profile_picture %>
+  <%= f.submit 'Update' %>
+<% end %>
+</div>

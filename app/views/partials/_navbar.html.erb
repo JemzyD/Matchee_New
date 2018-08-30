@@ -1,0 +1,96 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                Menu <i class="fa fa-bars"></i>
+            </button>
+            <%= link_to image_tag("logo2.png", alt: "logo", style:"height:25px;width:25px"), '/', class: 'navbar-brand' %>
+            <%= link_to 'Matchee', root_path, class:"navbar-brand" %>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <% if current_user %>
+                <% if current_freelancer %>
+                 <ul class="nav navbar-nav">
+
+                   <li><%= link_to 'Booking', bookings_index_path%></li>
+                   <li><%= link_to 'My Enquiries', enquiries_path%></li>
+                   <li class='dropdown'>
+                     <a href="#" class="dropdown-toggle text-center notification" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Messages</a>
+
+                     <ul class="dropdown-menu" id='notification-content'>
+                       <% current_user.enquiries.each do |enquiry| %>
+                         <% if enquiry.messages.where('sender_id !=? AND read =?', current_user.id, false).size > 0 %>
+                           <li><%= link_to enquiry.description, edit_enquiry_path(enquiry) %></li>
+                         <% end %>
+                       <% end %>
+                     </ul>
+                   </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= cl_image_tag(current_freelancer.picture,
+                            :width => 30, :height => 30,
+                            :crop => :fill, :gravity => :face)
+                            %></a>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to 'Profile', profile_path(current_freelancer.id) %></li>
+                        <li><%= link_to 'Edit Profile', edit_profile_path(current_freelancer.id) %></li>
+                        <li role="separator" class="divider"></li>
+                        <li><%= link_to 'Logout', logout_path, method: :delete %></li>
+                      </ul>
+                    </li>
+                  </ul>
+
+
+                  <% else %>
+                  <li><%= link_to 'Become a Freelancer', new_profile_path %></li>
+                  <ul class="nav navbar-nav">
+
+                      <li class='dropdown'>
+                        <a href="#" class="dropdown-toggle text-center notification" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Messages</a>
+
+                        <ul class="dropdown-menu" id='notification-content'>
+                          <% current_user.enquiries.each do |enquiry| %>
+                            <% if enquiry.messages.where('sender_id !=? AND read =?', current_user.id, false).size > 0 %>
+                              <li><%= link_to enquiry.description, edit_enquiry_path(enquiry) %></li>
+                            <% end %>
+                          <% end %>
+                        </ul>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle text-center" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= cl_image_tag(current_user.profile_picture,
+                              :width => 30, :height => 30,
+                              :crop => :thumb, :gravity => :face, :radius => :max)
+                              %></a>
+
+                        <ul class="dropdown-menu">
+                          <li><%= link_to 'Profile', user_path(current_user.id) %></li>
+                          <li><%= link_to 'Edit Profile', edit_user_path(current_user.id) %></li>
+                          <li role="separator" class="divider"></li>
+                          <li><%= link_to 'Logout', logout_path, method: :delete %></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  <% end %>
+              <% else %>
+                <li><%= link_to 'Login/Signup', login_path %></a></li>
+              <% end %>
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+
+</nav>
+
+
+
+
+
+<script>
+$('.dropdown-toggle').dropdown()
+</script>

@@ -1,0 +1,171 @@
+// Place all the styles related to the freelancers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.rating {
+    float:left;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.alignment{
+  text-align: center;
+}
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #563d7c;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #563d7c;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #563d7c;
+}
+
+.rating > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+
+
+.rating_read_only {
+    float:left;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating_read_only:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating_read_only:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:120%;
+    line-height:1.2;
+    color:#ddd;
+}
+
+.rating_read_only:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating_read_only > input:checked ~ label {
+    color: #563d7c;
+}
+
+.rating_read_only > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}
+
+
+.site-heading {
+  padding: 0px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+}
+
+.placeholder_box {
+  display: flex;
+  .right {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .left {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+}
+
+.freelancer_name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+
+.container{
+  display: flex;
+  flex-direction: column;
+}
+.container2{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+.container-full{
+  display: flex;
+}
+
+.description {
+  padding-top:40px;
+  height: 200px;
+}
+
+.side-line {
+  border-left: solid black 1px;
+}
+
+.calendar-small {
+  font-size: 8px;
+}
+
+.calendar-small {
+  .simple-calendar .day {
+    height:40px;
+    width:40px;
+  }
+}
+.container-profile{
+  display: flex;
+  justify-content: center;
+}

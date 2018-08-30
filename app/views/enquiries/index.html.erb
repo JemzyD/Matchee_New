@@ -1,0 +1,34 @@
+<div class='container'>
+
+
+  <%= render 'partials/search' %>
+  <h1>My Submitted Enquiries</h1>
+
+  <% if @enquiries.length > 0  %>
+
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Description of Enquiry</th>
+        <th>Enquiry's start date</th>
+        <th>Enquiry's end date</th>
+        <th>Liason</th>
+      </tr>
+    </thead>
+    <% @enquiries.each do |enquiry| %>
+    <tr>
+      <td><%=enquiry.description%></td>
+      <td><%=enquiry.start_date.strftime("%e %b %Y %l:%M %p")%></td>
+      <td><%=enquiry.end_date.strftime("%e %b %Y %l:%M %p")%></td>
+      <td><%= link_to raw("continue liason with <strong>#{enquiry.freelancer.user.name.capitalize}</strong>"), edit_enquiry_path(enquiry.id), {:class => 'btn btn-default'} %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <% else %>
+    <div>
+      <h1>You have not submitted any enquiry yet.</h1>
+    </div>
+
+  <% end %>
+</div>

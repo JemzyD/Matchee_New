@@ -1,0 +1,33 @@
+
+<div class='container'>
+  <%= render 'partials/search' %>
+  <div class='left'>
+    <table class='table'>
+      <tr>
+        <thead>
+          <tr>
+            <th>Freelancer's name</th>
+            <th>Description of the enquiry</th>
+            <th>Job start date and time</th>
+            <th>Job end date and time</th>
+          </tr>
+        </thead>
+        <td><%=@enquiry.freelancer.user.name%></td>
+        <td><%=@enquiry.description%></td>
+        <td><%=@enquiry.start_date.strftime("%e %b %Y %l:%M %p")%></td>
+        <td><%=@enquiry.end_date.strftime("%e %b %Y %l:%M %p")%></td>
+      </tr>
+    </table>
+  </div>
+  <div class='right'>
+    <% if  !current_freelancer %>
+    <h1>This is <%= @enquiry.freelancer.user.name %>'s schedule for the week <%=@enquiry.start_date.to_date.cweek%> of 2017 </h1>
+    <% end %>
+    <!-- testing out partial for weekly calendar ZL -->
+    <!-- passed_datum requires :dates, :start_time, :end_time and start date and time slots as well later -->
+    <%= render partial: 'partials/calendar_for_specific_booking', locals: { passed_datum: @occurrences } %>
+    <% if @enquiry.status != 'done' %>
+    <%= link_to "Chat", edit_enquiry_path(@enquiry), class:'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

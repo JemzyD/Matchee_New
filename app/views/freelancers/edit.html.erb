@@ -1,0 +1,61 @@
+<div class="container">
+
+<h1>Edit Profile</h1>
+<%= form_for :freelancer, url: profile_path(@freelancer), method: :patch do |f| %>
+<p>
+  <%= f.label :profession %><br>
+  <%= f.text_field(:profession, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :description %><br>
+  <%= f.text_field(:description, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :picture %><br>
+  <%= f.file_field :picture %>
+</p>
+
+<p>
+  <%= f.label :start_working_hours %><br>
+  <%= f.time_field(:start_working_hours, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :end_working_hours %><br>
+  <%= f.time_field(:end_working_hours, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :price_start %><br>
+  <%= f.number_field(:price_start, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :price_end %><br>
+  <%= f.number_field(:price_end, {:class => 'form-control'}) %>
+</p>
+
+<p>
+  <%= f.label :address %><br>
+  <%= f.text_field(:address, {:class => 'form-control'}) %>
+</p>
+
+<p>Choose your schedule</p>
+<% Date::DAYNAMES.each do |day| %>
+  <% if @freelancer_days.include? day %>
+    <%= check_box_tag('days[]', day, checked = true) %>
+    <%= f.label day %>
+  <% else %>
+    <%= check_box_tag('days[]', day, checked = false) %>
+    <%= f.label day %>
+  <% end %>
+<% end %>
+
+<p>
+  <%= f.submit({:class => 'btn btn-primary'}) %>
+</p>
+<% end %>
+
+</div>

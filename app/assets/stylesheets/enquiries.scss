@@ -1,0 +1,54 @@
+// Place all the styles related to the enquiries controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+#messages {
+  height: 550px;
+  overflow: scroll;
+}
+
+.text-right,
+.text-left {
+    margin: 10px;
+}
+
+.sender {
+  padding: 5px 20px;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+}
+
+.recipient {
+  padding: 5px 20px;
+}
+
+.enquiry_form {
+  height: 600px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.align{
+  text-align: center;
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  padding: 75px;
+  flex-direction: row;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+}

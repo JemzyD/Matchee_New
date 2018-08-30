@@ -1,0 +1,11 @@
+<%= form_for :rating, url:"#", html: { method: :post } do |f| %>
+  <fieldset class="rating_read_only">
+    <% 5.downto(1) do |btn| %>
+      <% if big_rating.to_i == btn %>
+      <%= f.radio_button(:rating, "#{btn}", options = {checked: true}) %> <%= f.label(:rating.to_s + "_#{btn}", "egs") %>
+      <% else %>
+      <%= f.radio_button(:rating, "#{btn}", options = {disabled: true}) %> <%= f.label(:rating.to_s + "_#{btn}", "egs") %>
+      <% end %>
+    <% end %>
+  </fieldset>
+<% end %>
