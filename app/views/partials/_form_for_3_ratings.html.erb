@@ -7,7 +7,7 @@
     <%= f.radio_button(:professionalism, "2") %> <%= f.label(:professionalism.to_s + "_2", "Kinda bad") %>
     <%= f.radio_button(:professionalism, "1") %> <%= f.label(:professionalism.to_s + "_1", "Sucks big time") %>
   </fieldset>
-  <br>
+  <br><br>
 
   <h4>Value for money</h4>
   <fieldset class="rating">
@@ -17,7 +17,7 @@
     <%= f.radio_button(:value, "2") %> <%= f.label(:value.to_s + "_2", "Kinda bad") %>
     <%= f.radio_button(:value, "1") %> <%= f.label(:value.to_s + "_1", "Sucks big time") %>
   </fieldset>
-  <br>
+  <br><br>
 
   <h4>Cleanliness</h4>
   <fieldset class="rating">
@@ -27,7 +27,7 @@
     <%= f.radio_button(:cleanliness, "2") %> <%= f.label(:cleanliness.to_s + "_2", "Kinda bad") %>
     <%= f.radio_button(:cleanliness, "1") %> <%= f.label(:cleanliness.to_s + "_1", "Sucks big time") %>
   </fieldset>
-  <br>
+  <br><br><br>
 
   <h4>Description of Job</h4>
   <%= f.number_field(:freelancer_id, {:style => 'display:none', :value => @freelancer.id}) %>
